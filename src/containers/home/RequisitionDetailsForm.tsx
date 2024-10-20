@@ -14,11 +14,7 @@ const RequisitionDetailsForm: React.FC<{
   setRequisitionDetails: React.Dispatch<
     React.SetStateAction<IRequisitionDetails>
   >;
-}> = ({
-  handleTab,
-  requisitionDetails,
-  setRequisitionDetails,
-}) => {
+}> = ({ handleTab, requisitionDetails, setRequisitionDetails }) => {
   const {
     handleChange,
     errors,
@@ -28,7 +24,7 @@ const RequisitionDetailsForm: React.FC<{
     values,
     setFieldTouched,
     setFieldValue,
-    isValid,
+    // isValid,
   } = useFormik<IRequisitionDetails>({
     initialValues: requisitionDetails,
     validationSchema: Yup.object().shape({

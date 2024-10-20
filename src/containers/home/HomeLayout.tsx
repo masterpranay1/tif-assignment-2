@@ -16,7 +16,11 @@ import JobDetailsForm from "./JobDetailsForm";
 import RequisitionForm from "./RequisitionDetailsForm";
 import DisplayCard from "./PreviewCard";
 import { PageNumbers } from "../../interface/home";
-import { IRequisitionDetails } from "@src/interface/forms";
+import {
+  IInterViewSettings,
+  IJobDetails,
+  IRequisitionDetails,
+} from "@src/interface/forms";
 
 const CustomTab: React.FC<TabProps> = ({ children, ...props }) => {
   return (
@@ -41,6 +45,19 @@ const HomeLayout = () => {
       gender: "",
     });
 
+  const [jobDetails, setJobDetails] = useState<IJobDetails>({
+    jobTitle: "",
+    jobDetails: "",
+    jobLocation: "",
+  });
+
+  const [interviewSettings, setInterviewSettings] =
+    useState<IInterViewSettings>({
+      interviewMode: "",
+      interviewDuration: "",
+      interviewLanguage: "",
+    });
+
   return (
     <Box w="100%">
       <Container maxW="1200px">
@@ -63,14 +80,24 @@ const HomeLayout = () => {
                 />
               </TabPanel>
               <TabPanel>
-                <JobDetailsForm handleTab={handlePage} />
+                <JobDetailsForm
+                  handleTab={handlePage}
+                  jobDetails={jobDetails}
+                  setJobDetails={setJobDetails}
+                />
               </TabPanel>
               <TabPanel>
-                <InterviewSettingsForm handleTab={handlePage} />
+                <InterviewSettingsForm
+                  handleTab={handlePage}
+                  interviewSettings={interviewSettings}
+                  setInterviewSettings={setInterviewSettings}
+                />
               </TabPanel>
             </TabPanels>
-            <DisplayCard 
-              requisitionDetails={requisitionDetails} 
+            <DisplayCard
+              requisitionDetails={requisitionDetails}
+              jobDetails={jobDetails}
+              interviewSettings={interviewSettings}
             />
           </Grid>
         </Tabs>

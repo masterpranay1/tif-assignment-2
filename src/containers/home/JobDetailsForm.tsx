@@ -1,5 +1,5 @@
 import { Button, Flex, Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import FormInput from "../../components/formComponents/FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,25 +8,33 @@ import { IJobDetails } from "../../interface/forms";
 
 const JobDetailsForm: React.FC<{
   handleTab: (n: PageNumbers) => void;
-}> = ({ handleTab }) => {
-  const { handleChange, errors, touched, handleBlur, handleSubmit, values } =
-    useFormik<IJobDetails>({
-      initialValues: {
-        jobTitle: "",
-        jobDetails: "",
-        jobLocation: "",
-      },
-      validationSchema: Yup.object().shape({
-        jobTitle: Yup.string().required("Job Title is required"),
-        jobDetails: Yup.string().required("Job Details is required"),
-        jobLocation: Yup.string().required("Job Location is required"),
-        jobPosition: Yup.string().required("Job position is required"),
-      }),
-      onSubmit: (values) => {
-        console.log({ values });
-        handleTab(2);
-      },
-    });
+  jobDetails: IJobDetails;
+  setJobDetails: React.Dispatch<React.SetStateAction<IJobDetails>>;
+}> = ({ handleTab, jobDetails, setJobDetails }) => {
+  const {
+    handleChange,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    values,
+    isValid,
+  } = useFormik<IJobDetails>({
+    initialValues: jobDetails,
+    validationSchema: Yup.object().shape({
+      jobTitle: Yup.string().required("Job Title is required"),
+      jobDetails: Yup.string().required("Job Details is required"),
+      jobLocation: Yup.string().required("Job Location is required"),
+      // jobPosition: Yup.string().required("Job position is required"),
+    }),
+    onSubmit: (values) => {
+      handleTab(2);
+    },
+  });
+
+  useEffect(() => {
+    setJobDetails(values);
+  }, [values]);
 
   return (
     <Box width="100%" as="form" onSubmit={handleSubmit as any}>
@@ -65,7 +73,7 @@ const JobDetailsForm: React.FC<{
           <Button colorScheme="gray" type="button" onClick={() => handleTab(0)}>
             Previous
           </Button>
-          <Button colorScheme="red" type="submit">
+          <Button colorScheme="red" type="submit" >
             Next
           </Button>
         </Flex>
