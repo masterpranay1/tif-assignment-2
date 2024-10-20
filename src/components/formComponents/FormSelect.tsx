@@ -93,7 +93,7 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 
           menuPortal: (base) => ({ ...base, zIndex: 9999 }),
         }}
-        menuPortalTarget={document.body} //important
+        // menuPortalTarget={document.body} //important
         {...selectProps}
       />
       {children}
